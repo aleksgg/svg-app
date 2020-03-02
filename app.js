@@ -68,8 +68,7 @@ app.post('/upload', function(req, res) {
 
 //Respond to GET requests for files in the uploads/ directory
 app.get('/uploads/:name', function(req , res){
-  console.log("Testtt");
-  
+
   fs.stat('uploads/' + req.params.name, function(err, stat) {
     if(err == null) {
       res.sendFile(path.join(__dirname+'/uploads/' + req.params.name));
@@ -83,11 +82,31 @@ app.get('/uploads/:name', function(req , res){
 //******************** Your code goes here ******************** 
 
 
+app.get('/uploadedFiles', function(req, res){
+  var jsonArr = [];
+  var myJSON;
+  
+  let filePath;
+  fs.readdirSync("./uploads/").forEach(file => {
+    filePath = file;  
+    myJSON = {
+      fileName: filePath
+    };
+    jsonArr.push(myJSON);
+  });
+  
+  console.log("The data being sent is : ");
+  console.log(jsonArr);
+  
+  res.send(jsonArr);
+});
+
 
 
 //Sample endpoint
 app.get('/someendpoint', function(req , res){
   let retStr = req.query.name1 + " " + req.query.name2;
+  
   res.send({
     foo: retStr
   });

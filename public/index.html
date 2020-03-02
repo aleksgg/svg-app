@@ -30,15 +30,14 @@
     <div id=page-content>
         <p></p>
         <img src="rects.svg">
-    
+        
         <hr>
         <div id="blah">I am blah</div>
-        <p>THIS IS A TEST PARAGRAPH</p>
         <hr>
     
         <div class="fileLog" >
-            <div class="fileTable" id="fileLogTable">
-                <table>
+            <table id = "fileLogTable">
+                <div id="fileTableHeader">
                     <thead>
                         <tr>
                             <th>Image<br>(click to download)</th>
@@ -50,33 +49,29 @@
                             <th>Number of groups</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <td><img src="rects.svg"></td>
+                </div>
+                <div id="fileTableContent">
+                    <tbody id="tableBody">
+                        <!--<td><img src="rects.svg"></td>
                         <td><a href="rects.svg">rects.svg</a></td>
                         <td><p>100KB</p></td>
                         <td><p>2</p></td>
                         <td><p>3</p></td>
                         <td><p>8</p></td>
-                        <td><p>1</p></td>
-                    </tbody>
-                    </table>
-            </div>  
-    
-            <form action="/upload" method="POST" enctype="multipart/form-data">
-                <input id="real-file-button" class="form-control-file" type="file" accept=".svg" name="uploadFile" hidden="hidden">
-                <button type="button" id="file-button">Choose a File</button>
-                
-                <input id="real-upload-button" class="btn mt-3" type="submit" value="upload" hidden="hidden">
-                <button type="button" id="upload-button">Upload</button>
-            </form>  
-
-
+                        <td><p>1</p></td>-->
+                    </tbody>    
+                </div>    
+            </table>
         </div>
-    
-        <form action="/uploads/" method="GET" enctype="multipart/form-data">
-            <img src="" alt="">
-    
-        </form>
+
+        <form id='uploadFile' action="/upload" method="POST" enctype="multipart/form-data">
+            <input id="real-file-button" type="file" name="uploadFile" accept=".svg" hidden="hidden">
+            <button type="button" id="file-button">Choose a File</button>
+            
+            <input id="real-upload-button" type="submit" value="upload" hidden="hidden">
+            <button type="button" id="upload-button">Upload</button>
+        </form>  
+
     
         <form ref='someform' id='someform'>
             <div class="form-group">
