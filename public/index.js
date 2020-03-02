@@ -38,9 +38,7 @@ $(document).ready(function() {
             fileName: "rects.svg"
         },
         success: function (data) {
-          //console.log(input.files);
             
-          //for(var i = 0; i < data.length; i++);
            console.log("The file names received is :");
            
            for(let i = 0; i < data.length; i++){
@@ -105,34 +103,10 @@ $(document).ready(function() {
 
             } 
 
-            //console.log("I: "+i);
-            //console.log("fName: "+fName);
-            // var table = document.getElementById('fileLogTable');
-            // var row = table.insertRow(table.rows.length);
-
-            // var cellFN = row.insertCell(0);
-            // var cellV = row.insertCell(1);
-            // var cellPI = row.insertCell(2);
-            // var cellNE = row.insertCell(3);
-            // var cellNP = row.insertCell(4);
-
-            // cellFN.innerHTML = "<a href='/uploads/" + fName + "'>" + fName + "</a>";
-            // cellV.innerHTML = jString[i].version;
-            // cellPI.innerHTML = jString[i].prodID;
-            // cellNE.innerHTML = jString[i].numEvents;
-            // cellNP.innerHTML = jString[i].numProps;
-
-
-            //console.log("Look under here:");
-            //console.log(jString[0]);
-          //}
-
         },
         fail: function(error) {
             console.log("Error with uploading file names. ");
             
-            // Non-200 return, do something with error
-           //console.log(error);
         }
     });
     
