@@ -35,14 +35,19 @@ $(document).ready(function() {
         dataType: 'json',
         url: '/uploadedFiles',
         data: { 
-            fileName: "rects.svg"
+            fileName: "rects.svg",
+            fileSize: "0KB",
+            numRect: "0",
+            numCirc: "0",
+            numPath: "0",
+            numGroups: "0"
         },
         success: function (data) {
-            
-           console.log("The file names received is :");
            
            for(let i = 0; i < data.length; i++){
+               console.log("The file name received is :");
                console.log(data[i].fileName); 
+               
                let imgLoc = "./uploads/" + data[i].fileName;
                
                var fileLog = document.getElementById("fileLogTable");
@@ -73,31 +78,31 @@ $(document).ready(function() {
 
                /* Adds the file size -- currently hard coded -- */
                let fsElement = document.createElement('p');
-               let fsText = document.createTextNode("100KB");
+               let fsText = document.createTextNode(data[i].fileSize);
                fsElement.appendChild(fsText);
                fsCell.appendChild(fsElement);
 
-               /* Adds the number of rectangles  -- currently hard coded -- */
+               /* Adds the number of rectangles */
                let numRElement = document.createElement('p');
-               let numRText = document.createTextNode("2");
+               let numRText = document.createTextNode(data[i].numRect);
                numRElement.appendChild(numRText);
                numRCell.appendChild(numRElement);
 
-               /* Adds the number of circles -- currently hard coded -- */
+               /* Adds the number of circles */
                let numCElement = document.createElement('p');
-               let numCText = document.createTextNode("3");
+               let numCText = document.createTextNode(data[i].numCirc);
                numCElement.appendChild(numCText);
                numCCell.appendChild(numCElement);
                 
-               /* Adds the number of paths -- currently hard coded -- */
+               /* Adds the number of paths */
                let numPElement = document.createElement('p');
-               let numPText = document.createTextNode("1");
+               let numPText = document.createTextNode(data[i].numPath);
                numPElement.appendChild(numPText);
                numPCell.appendChild(numPElement);
 
-               /* Adds the number of paths -- currently hard coded -- */
+               /* Adds the number of paths */
                let numGElement = document.createElement('p');
-               let numGText = document.createTextNode("5");
+               let numGText = document.createTextNode(data[i].numGroups);
                numGElement.appendChild(numGText);
                numGCell.appendChild(numGElement);
 
@@ -106,7 +111,7 @@ $(document).ready(function() {
         },
         fail: function(error) {
             console.log("Error with uploading file names. ");
-            
+            console.log(error);
         }
     });
     

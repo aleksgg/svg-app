@@ -82,22 +82,54 @@ app.get('/uploads/:name', function(req , res){
 //******************** Your code goes here ******************** 
 
 
+
+/* Returns the file size of a given file in kilobytes. */
+function getFileSize(fileName) {
+  
+  var fileStats = fs.statSync(fileName);
+  
+  var fileSizeInBytes = fileStats["size"];
+  
+  fileSizeInBytes = fileSizeInBytes / 1024;
+  
+  return Math.round(fileSizeInBytes);
+}
+
+
+let sharedLibrary = ffi.Library('parser/libsvgparse', {
+    'svgFileToJSON': [ 'string', [ 'string' ] ],
+});
+
 app.get('/uploadedFiles', function(req, res){
   var jsonArr = [];
-  var myJSON;
-  
+
   let filePath;
   fs.readdirSync("./uploads/").forEach(file => {
-    filePath = file;  
-    myJSON = {
-      fileName: filePath
+    filePath = "./uploads/" + file;  
+
+    let fileSize = getFileSize(filePath).toString(8) + "KB";
+    console.log(fileSize);
+
+    let svgJSON = sharedLibrary.svgFileToJSON(filePath);
+    
+    svgJSON = JSON.parse(svgJSON);
+    
+    let fullJSON = {
+      fileName: file,
+      fileSize: fileSize,
+      numRect: svgJSON.numRect,
+      numCirc: svgJSON.numCirc,
+      numPath: svgJSON.numPaths,
+      numGroups: svgJSON.numGroups
     };
-    jsonArr.push(myJSON);
+    
+    jsonArr.push(fullJSON);
+  
   });
   
   console.log("The data being sent is : ");
   console.log(jsonArr);
-  
+
   res.send(jsonArr);
 });
 
