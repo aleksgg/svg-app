@@ -25,6 +25,41 @@ char * svgFileToJSON(char * fileName) {
 }
 
 
+char * getSVGFileDescription(char * fileName) {
+    SVGimage * img = NULL;
+    
+    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+
+    char * jstring = descTitleToJSON(img);
+    
+    deleteSVGimage(img);
+
+    return jstring;
+}
+
+
+char * descTitleToJSON (SVGimage * img) {
+    char * j_string;
+    int len;
+
+    if (img == NULL)
+    {
+        j_string = malloc(sizeof(char) + 3);
+        strcpy(j_string, "{}");
+        return j_string;
+    }
+    
+    /* 64 for the string max, 25 for json formatting, 20 max for other attribute string. */
+    len = 256 + 256 + 50;
+    j_string = malloc(sizeof(char) * len);
+    
+    sprintf(j_string, "{\"title\":\"%s\",\"description\":\"%s\"}", img->title, img->description);
+
+
+    return j_string; 
+}
+
+
 Circle* JSONtoCircle(const char* svgString) {
     if (svgString == NULL) {
         return NULL;

@@ -114,6 +114,51 @@ $(document).ready(function() {
             console.log(error);
         }
     });
+
+    $.ajax({
+        type: 'get',
+        dataType: 'json',
+        url: '/getSVGfiles',
+        data: { 
+            fileName: "rects.svg",
+            title: "title-query",
+            desc: "desc-query"
+        },
+        success: function (data) {
+           for(let i = 0; i < data.length; i++){
+            console.log("The filename");
+            console.log(data[i].fileName);
+            console.log("The description :");
+            console.log(data[i].desc);
+            console.log("The title :");
+            console.log(data[i].title);
+            
+            let imgLoc = "./uploads/" + data[i].fileName;
+            
+            var fileLog = document.getElementById("svgViewerTable");
+            let row = fileLog.insertRow(fileLog.rows.length);
+            
+            let titleCell = row.insertCell(0);
+            let descCell = row.insertCell(1);
+
+
+            let titleElement = document.createElement('p');
+            let titleText = document.createTextNode(data[i].title);
+            titleElement.appendChild(titleText);
+            titleCell.appendChild(titleElement);
+
+            let descElement = document.createElement('p');
+            let descText = document.createTextNode(data[i].desc);
+            descElement.appendChild(descText);
+            descCell.appendChild(descElement);
+
+            } 
+        },
+        fail: function(error) {
+            console.log("Error with uploading file names. ");
+            console.log(error);
+        }
+    });
     
     customizeButton();
 

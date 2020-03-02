@@ -77,7 +77,9 @@ char *cropString(char *svgString);
 
 char * svgFileToJSON(char * fileName);
 
+char * getSVGFiledescription(char * fileName);
 
+char * descTitleToJSON (SVGimage * img);
 
 
 /* 

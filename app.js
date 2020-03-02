@@ -98,7 +98,39 @@ function getFileSize(fileName) {
 
 let sharedLibrary = ffi.Library('parser/libsvgparse', {
     'svgFileToJSON': [ 'string', [ 'string' ] ],
+    'getSVGFileDescription': [ 'string', [ 'string' ] ],
 });
+
+
+app.get('/getSVGfiles', function(req, res){
+  var jsonArr = [];
+
+  let filePath;
+  fs.readdirSync("./uploads/").forEach(file => {
+    filePath = "./uploads/" + file;  
+
+    let svgJSON = sharedLibrary.svgFileToJSON(filePath);
+    
+    let desc = sharedLibrary.getSVGFileDescription(filePath);
+  
+    desc = JSON.parse(desc);
+
+    let fullJSON = {
+      fileName: file,
+      title: desc.title,
+      desc: desc.description,
+    };
+  
+    jsonArr.push(fullJSON);
+  
+  });
+  
+  console.log("The data being sent is : ");
+  console.log(jsonArr);
+  res.send(jsonArr);
+  
+});
+
 
 app.get('/uploadedFiles', function(req, res){
   var jsonArr = [];
@@ -108,10 +140,14 @@ app.get('/uploadedFiles', function(req, res){
     filePath = "./uploads/" + file;  
 
     let fileSize = getFileSize(filePath).toString(8) + "KB";
-    console.log(fileSize);
 
     let svgJSON = sharedLibrary.svgFileToJSON(filePath);
     
+    let desc = sharedLibrary.getSVGFileDescription(filePath);
+    
+    console.log(desc);
+    
+
     svgJSON = JSON.parse(svgJSON);
     
     let fullJSON = {

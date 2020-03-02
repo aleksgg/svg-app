@@ -58,13 +58,32 @@
             </table>
         </div>
 
+
         <form id='uploadFile' action="/upload" method="POST" enctype="multipart/form-data">
             <input id="real-file-button" type="file" name="uploadFile" accept=".svg" hidden="hidden">
             <button type="button" id="file-button">Choose a File</button>
             
             <input id="real-upload-button" type="submit" value="upload" hidden="hidden">
             <button type="button" id="upload-button">Upload</button>
-        </form>  
+        </form> 
+        
+        
+        <p></p>
+        <p></p>
+        <p></p>
+        
+        <div class="svgViewer">
+            <table id="svgViewerTable">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
 
     
         <form ref='someform' id='someform'>
