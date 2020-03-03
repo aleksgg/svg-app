@@ -82,6 +82,9 @@ char * getSVGFiledescription(char * fileName);
 char * descTitleToJSON (SVGimage * img);
 
 
+char * getSVGFileTitle(char * fileName);
+
+
 /* 
 TODO : attribute null
 TODO : for loop index increase

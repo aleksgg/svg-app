@@ -25,16 +25,32 @@ char * svgFileToJSON(char * fileName) {
 }
 
 
+char * getSVGFileTitle(char * fileName) {
+	SVGimage * img = NULL;
+
+	img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+
+	char * desc = malloc(sizeof(char) * 257);
+	strcpy(desc, img->title);
+
+	deleteSVGimage(img);
+
+	return desc;
+}
+
 char * getSVGFileDescription(char * fileName) {
     SVGimage * img = NULL;
     
     img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
 
-    char * jstring = descTitleToJSON(img);
-    
+    //char * jstring = descTitleToJSON(img);
+    char * desc = malloc(sizeof(char) * 257);
+    strcpy(desc, img->description);
+
+
     deleteSVGimage(img);
 
-    return jstring;
+    return desc;
 }
 
 

@@ -99,6 +99,7 @@ function getFileSize(fileName) {
 let sharedLibrary = ffi.Library('parser/libsvgparse', {
     'svgFileToJSON': [ 'string', [ 'string' ] ],
     'getSVGFileDescription': [ 'string', [ 'string' ] ],
+    'getSVGFileTitle': [ 'string', [ 'string' ] ],
 });
 
 
@@ -112,13 +113,14 @@ app.get('/getSVGfiles', function(req, res){
     let svgJSON = sharedLibrary.svgFileToJSON(filePath);
     
     let desc = sharedLibrary.getSVGFileDescription(filePath);
-  
-    desc = JSON.parse(desc);
+    let title = sharedLibrary.getSVGFileTitle(filePath);
 
+    console.log(desc.title);
+    console.log(desc.description);
     let fullJSON = {
       fileName: file,
-      title: desc.title,
-      desc: desc.description,
+      desc: desc.toString(),
+      title: title.toString()
     };
   
     jsonArr.push(fullJSON);

@@ -121,17 +121,11 @@ $(document).ready(function() {
         url: '/getSVGfiles',
         data: { 
             fileName: "rects.svg",
-            title: "title-query",
-            desc: "desc-query"
+            desc: "desc-query",
+	    title: "title-query"
         },
         success: function (data) {
            for(let i = 0; i < data.length; i++){
-            console.log("The filename");
-            console.log(data[i].fileName);
-            console.log("The description :");
-            console.log(data[i].desc);
-            console.log("The title :");
-            console.log(data[i].title);
             
             let imgLoc = "./uploads/" + data[i].fileName;
             
