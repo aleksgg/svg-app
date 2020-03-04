@@ -34,7 +34,9 @@
         <hr>
         <div id="blah">I am blah</div>
         <hr>
-    
+        
+        <h3 id="fileLogTitle">File Log Panel</h3>
+        
         <div class="fileLog" >
             <table id = "fileLogTable">
                 <div id="fileTableHeader">
@@ -72,18 +74,34 @@
         <p></p>
         <p></p>
         
-        <div class="svgViewer">
-            <table id="svgViewerTable">
+        <p></p>
+        <p></p>
+        <p></p>
+        
+        <h3 id="svgPanelTitle">SVGimage Panel</h3>
+        <div id="dropdownList">
+            <select class="select-css" id="mySelect">
+                <option value="default">No Selection</option>
+            </select>
+        </div>
+
+        <p></p>
+        <p></p>
+        <p></p>
+
+        <table id="mainSVGtable">
+            <table id="defaultTable" class="defaultTable">
                 <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Description</th>
+                        <th>SVG View Panel</th>
                     </tr>
                 </thead>
                 <tbody>
+                    <td>No file selected</td>
                 </tbody>
             </table>
-        </div>
+        </table>
+
 
     
         <form ref='someform' id='someform'>

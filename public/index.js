@@ -122,31 +122,18 @@ $(document).ready(function() {
         data: { 
             fileName: "rects.svg",
             desc: "desc-query",
-	    title: "title-query"
+	        title: "title-query"
         },
         success: function (data) {
-           for(let i = 0; i < data.length; i++){
+            let fileNames = [];
             
-            let imgLoc = "./uploads/" + data[i].fileName;
+            data.forEach(element => {
+                fileNames.push(element.fileName);
+            });
             
-            var fileLog = document.getElementById("svgViewerTable");
-            let row = fileLog.insertRow(fileLog.rows.length);
-            
-            let titleCell = row.insertCell(0);
-            let descCell = row.insertCell(1);
+            addDropdownContent(fileNames);
+            listenDropDown(data);
 
-
-            let titleElement = document.createElement('p');
-            let titleText = document.createTextNode(data[i].title);
-            titleElement.appendChild(titleText);
-            titleCell.appendChild(titleElement);
-
-            let descElement = document.createElement('p');
-            let descText = document.createTextNode(data[i].desc);
-            descElement.appendChild(descText);
-            descCell.appendChild(descElement);
-
-            } 
         },
         fail: function(error) {
             console.log("Error with uploading file names. ");
@@ -176,6 +163,111 @@ $(document).ready(function() {
 
 });
 
+function addDropdownContent(fileNames) {
+    var myParent = document.getElementById("dropdownList");
+
+    //Create and append select list
+    var selectList = document.getElementById("mySelect");
+
+    //Create and append the options
+    for (var i = 0; i < fileNames.length; i++) {
+        var option = document.createElement("option");
+        //option.value = fileNames[i];
+        option.text = fileNames[i];
+        option.id = "option-" + fileNames[i];
+        selectList.appendChild(option);
+    }
+}
+
+function listenDropDown(data) {
+    document.getElementById('mySelect').addEventListener('change', warn, true);
+    let anakinSkywalker;
+    function warn(dropDown) {
+        dropDown.preventDefault();
+        dropDown.stopPropagation();
+        
+        anakinSkywalker = dropDown.currentTarget.value;
+        for (let i = 0; i < data.length; i++) {
+            if( data[i].fileName == anakinSkywalker) {
+                console.log("The chosen one is " + data[i].fileName);
+                populateSVGtable(data[i]);
+            }
+        }
+    }
+}
+
+function populateSVGtable(data) {
+    let imgLoc = "./uploads/" + data.fileName;
+    
+    /* Get the main table. */
+    var mainTable = document.getElementById("mainSVGtable");
+
+    /* Creates a new dynamic table */
+    let table = document.createElement('table');
+    table.id = 'svgViewerTable';
+    table.className = 'svgViewer';
+    
+    let tableHead = document.createElement('thead');
+    
+    let tr1 = document.createElement('tr');
+    let tr2 = document.createElement('tr');
+
+    let tdTitle = document.createElement('td');
+    let tdDescription = document.createElement('td');
+    let tdImageTitle = document.createElement('td');
+    tdImageTitle.setAttribute("align", "right");
+    
+    let titleHead = document.createTextNode('Title');
+    let descriptionHead = document.createTextNode('Description');
+    let imageHead = document.createTextNode('Image View');
+
+    tdTitle.appendChild(titleHead);
+    tdDescription.appendChild(descriptionHead);
+    tdImageTitle.appendChild(imageHead);
+    
+    tr1.appendChild(tdImageTitle);
+    tr2.appendChild(tdTitle);
+    tr2.appendChild(tdDescription);
+
+    tableHead.appendChild(tr1);
+    tableHead.appendChild(tr2);
+    table.appendChild(tableHead);
+    
+    /* Hides the default table */
+    let defaultTable = document.getElementById("defaultTable")
+    defaultTable.style.visibility = "hidden"
+    
+    /* Replaces the child of the main table with the new dynamic table created. Adds it if none exist. */
+    mainTable.replaceChild(table, mainTable.childNodes[0]);
+    
+    /* Populates the table added with the json data provided */     
+    let row = table.insertRow(table.rows.length);
+    let row2 = table.insertRow(table.rows.length-2);  //might be different with different browsers
+    
+    let titleCell = row.insertCell(0);
+    let descCell = row.insertCell(1);
+
+    let imgCell = row2.insertCell(0);
+
+    var img = document.createElement('img');
+    img.src = imgLoc;
+    img.height = 200;
+    img.width = 200;
+    imgCell.appendChild(img);
+
+
+    let titleElement = document.createElement('p');
+    let titleText = document.createTextNode(data.title);
+    titleElement.appendChild(titleText);
+    titleCell.appendChild(titleElement);
+
+    let descElement = document.createElement('p');
+    let descText = document.createTextNode(data.desc);
+    descElement.appendChild(descText);
+    descCell.appendChild(descElement);
+
+
+}
 
 function customizeButton(){
     const realUploadBtn = document.getElementById("real-upload-button");
@@ -193,6 +285,5 @@ function customizeButton(){
     });
 
 }
-
 
 
