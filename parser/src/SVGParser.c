@@ -11,6 +11,28 @@
 #include <ctype.h>
 
 
+int main(){
+SVGimage * img = createValidSVGimage("../../uploads/vest.svg", "parser/validation/svg.xsd");
+char * string = pathListToJSON(img->paths);
+printf("%s\n", string);
+deleteSVGimage(img);
+free(string);   
+return 0;
+}
+
+
+char * fileNameToPathJSON(char * fileName) {
+    SVGimage * img = NULL;
+
+    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+
+    char * jstring = pathListToJSON(img->paths);
+
+    deleteSVGimage(img);
+
+    return jstring;
+}
+
 
 char * svgFileToJSON(char * fileName) {
     SVGimage * img = NULL;
@@ -36,7 +58,9 @@ char * getSVGFileTitle(char * fileName) {
 	deleteSVGimage(img);
 
 	return desc;
+
 }
+
 
 char * getSVGFileDescription(char * fileName) {
     SVGimage * img = NULL;

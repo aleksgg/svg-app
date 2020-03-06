@@ -81,8 +81,9 @@ char * getSVGFiledescription(char * fileName);
 
 char * descTitleToJSON (SVGimage * img);
 
-
 char * getSVGFileTitle(char * fileName);
+
+char * fileNameToPathJSON(char * fileName);
 
 
 /* 

@@ -47,7 +47,6 @@ $(document).ready(function() {
            for(let i = 0; i < data.length; i++){
                console.log("The file name received is :");
                console.log(data[i].fileName); 
-               
                let imgLoc = "./uploads/" + data[i].fileName;
                
                var fileLog = document.getElementById("fileLogTable");
@@ -207,30 +206,61 @@ function populateSVGtable(data) {
     table.id = 'svgViewerTable';
     table.className = 'svgViewer';
     
-    let tableHead = document.createElement('thead');
+    let tableHead = table.createTHead();
     
+    /* Creates the rows for the table headers. */
     let tr1 = document.createElement('tr');
     let tr2 = document.createElement('tr');
+    let tr3 = document.createElement('tr');
 
-    let tdTitle = document.createElement('td');
-    let tdDescription = document.createElement('td');
-    let tdImageTitle = document.createElement('td');
-    tdImageTitle.setAttribute("align", "right");
+    /* Creates the headers for the table */
+    let thImageTitle = document.createElement('th');
+    
+    let thTitle = document.createElement('th');
+    let thDescription = document.createElement('th');
+    
+    let thComponent = document.createElement('th');
+    let thSummary = document.createElement('th');
+    let thOthrAttr = document.createElement('th');
+
+    /* Creates the text for table heads */
+    let imageHead = document.createTextNode('Image View');
     
     let titleHead = document.createTextNode('Title');
     let descriptionHead = document.createTextNode('Description');
-    let imageHead = document.createTextNode('Image View');
 
-    tdTitle.appendChild(titleHead);
-    tdDescription.appendChild(descriptionHead);
-    tdImageTitle.appendChild(imageHead);
+    let componentHead = document.createTextNode('Component');
+    let summaryHead = document.createTextNode('Summary');
+    let othrAttrHead = document.createTextNode('Other Attributes');
     
-    tr1.appendChild(tdImageTitle);
-    tr2.appendChild(tdTitle);
-    tr2.appendChild(tdDescription);
+    
+    /* Adds the header texts to headers. */
+    thImageTitle.appendChild(imageHead);
+    
+    thTitle.appendChild(titleHead);
+    thDescription.appendChild(descriptionHead);
+    
+    thComponent.appendChild(componentHead);
+    thSummary.appendChild(summaryHead);
+    thOthrAttr.appendChild(othrAttrHead);
 
+
+    /* Adds the headers to header rows */
+    tr1.appendChild(thImageTitle);
+    
+    tr2.appendChild(thTitle);
+    tr2.appendChild(thDescription);
+    
+    tr3.appendChild(thComponent);
+    tr3.appendChild(thSummary);
+    tr3.appendChild(thOthrAttr);
+    
+    /* Adds the head rows to table head */
     tableHead.appendChild(tr1);
     tableHead.appendChild(tr2);
+    tableHead.appendChild(tr3);
+    
+    /* Adds the table head to the table */
     table.appendChild(tableHead);
     
     /* Hides the default table */
@@ -241,13 +271,22 @@ function populateSVGtable(data) {
     mainTable.replaceChild(table, mainTable.childNodes[0]);
     
     /* Populates the table added with the json data provided */     
-    let row = table.insertRow(table.rows.length);
-    let row2 = table.insertRow(table.rows.length-2);  //might be different with different browsers
-    
-    let titleCell = row.insertCell(0);
-    let descCell = row.insertCell(1);
+    console.log("Row lenght is : " + table.rows.length);
 
-    let imgCell = row2.insertCell(0);
+
+    let row1 = table.insertRow(table.rows.length-2);
+    let row2 = table.insertRow(table.rows.length-1);
+    let row3 = table.insertRow(table.rows.length);  //might be different with different browsers
+    
+
+    let imgCell = row1.insertCell(0);
+    
+    let titleCell = row2.insertCell(0);
+    let descCell = row2.insertCell(1);
+
+    let componentCell = row3.insertCell(0);
+    let summaryCell =  row3.insertCell(1);
+    let othrAttrCell = row3.insertCell(2);
 
     var img = document.createElement('img');
     img.src = imgLoc;
@@ -265,6 +304,24 @@ function populateSVGtable(data) {
     let descText = document.createTextNode(data.desc);
     descElement.appendChild(descText);
     descCell.appendChild(descElement);
+
+
+    let compElement = document.createElement('p');
+    let compText = document.createTextNode("Test Component");
+    compElement.appendChild(compText);
+    componentCell.appendChild(compElement);
+
+    
+    let summaryElement = document.createElement('p');
+    let summaryText = document.createTextNode("Test summary");
+    summaryElement.appendChild(summaryText);
+    summaryCell.appendChild(summaryElement);
+
+    
+    let othrAttrElement = document.createElement('p');
+    let othrAttrText = document.createTextNode("Test other attribute");
+    othrAttrElement.appendChild(othrAttrText);
+    othrAttrCell.appendChild(othrAttrElement);
 
 
 }

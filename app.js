@@ -100,6 +100,7 @@ let sharedLibrary = ffi.Library('parser/libsvgparse', {
     'svgFileToJSON': [ 'string', [ 'string' ] ],
     'getSVGFileDescription': [ 'string', [ 'string' ] ],
     'getSVGFileTitle': [ 'string', [ 'string' ] ],
+    'fileNameToPathJSON' : [ 'string', [ 'string' ] ],
 });
 
 
@@ -114,9 +115,12 @@ app.get('/getSVGfiles', function(req, res){
     
     let desc = sharedLibrary.getSVGFileDescription(filePath);
     let title = sharedLibrary.getSVGFileTitle(filePath);
-
-    console.log(desc.title);
-    console.log(desc.description);
+    let paths = sharedLibrary.fileNameToPathJSON(filePath);
+    
+    paths = JSON.parse(paths);
+    console.log("path for " + filePath + " is : ");
+    console.log(paths);
+    
     let fullJSON = {
       fileName: file,
       desc: desc.toString(),
