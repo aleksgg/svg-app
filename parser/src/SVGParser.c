@@ -9,16 +9,8 @@
 #include "Helpers.h"
 #include <math.h>
 #include <ctype.h>
+#include "assert.h"
 
-
-int main(){
-SVGimage * img = createValidSVGimage("../../uploads/vest.svg", "parser/validation/svg.xsd");
-char * string = pathListToJSON(img->paths);
-printf("%s\n", string);
-deleteSVGimage(img);
-free(string);   
-return 0;
-}
 
 
 char * fileNameToPathJSON(char * fileName) {
@@ -3068,3 +3060,6 @@ int numRectsWithArea(SVGimage *img, float area) {
 
     return count;
 }
+
+
+

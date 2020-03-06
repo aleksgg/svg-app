@@ -118,13 +118,15 @@ app.get('/getSVGfiles', function(req, res){
     let paths = sharedLibrary.fileNameToPathJSON(filePath);
     
     paths = JSON.parse(paths);
+    
     console.log("path for " + filePath + " is : ");
     console.log(paths);
     
     let fullJSON = {
       fileName: file,
       desc: desc.toString(),
-      title: title.toString()
+      title: title.toString(),
+      paths: paths
     };
   
     jsonArr.push(fullJSON);

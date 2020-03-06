@@ -1,20 +1,34 @@
-CFLAGS = -Wall -g -std=c11
-BIN = ./
-INC = include/
-SRC = src/
-XML_PATH = /usr/include/libxml2
+UNAME := $(shell uname)
+CC = gcc
+CFLAGS = -Wall -std=c11 -g
+LDFLAGS= -Lbin/
+SOURCES = src/
+INCLUDE = include/
+BIN = bin/
 
-# Standard common makefile
-parser: $(BIN)libsvgparse.so
+#LOCAL_C_INCLUDES := $(LOCAL_PATH)/src
 
-$(BIN)libsvgparse.so: $(BIN)SVGParser.o $(BIN)LinkedListAPI.o
-	gcc -shared -o $(BIN)libsvgparse.so $(BIN)SVGParser.o $(BIN)LinkedListAPI.o -lxml2 -lm
+ifeq ($(UNAME), Linux)
+	INC_PATH = /usr/include/libxml2
+endif
+ifeq ($(UNAME), Darwin)c
+	INC_PATH = /usr/local/Cellar/libxml2/2.9.10/include/libxml2
+endif
 
-$(BIN)SVGParser.o: $(SRC)SVGParser.c $(INC)LinkedListAPI.h $(INC)SVGParser.h
-	gcc -c -fpic $(CFLAGS) -I$(XML_PATH) -I$(INC) $(SRC)SVGParser.c -o $(BIN)SVGParser.o
 
-$(BIN)LinkedListAPI.o: $(SRC)LinkedListAPI.c $(INC)LinkedListAPI.h
-	gcc -c -fpic $(CFLAGS) -I$(INC) $(SRC)LinkedListAPI.c -o $(BIN)LinkedListAPI.o
+all: SVGParser
+
+SVGParser: SVGParser.o $(BIN)liblist.so
+	$(CC) $(CFLAGS) $(LDFLAGS) -o SVGParser SVGParser.o -llist -lxml2 -lm
+
+SVGParser.o: $(SOURCES)SVGParser.c
+	$(CC) $(CFLAGS) -I$(INCLUDE) -I$(INC_PATH) -c $(SOURCES)SVGParser.c
+
+$(BIN)liblist.so: LinkedListAPI.o
+	$(CC) -shared -o $(BIN)liblist.so LinkedListAPI.o
+
+LinkedListAPI.o: $(SOURCES)LinkedListAPI.c $(INCLUDE)LinkedListAPI.h
+	$(CC) $(CFLAGS) -I$(INCLUDE) -c -fpic $(SOURCES)LinkedListAPI.c
 
 clean:
-	rm $(BIN)*.o $(BIN)*.so
+	rm -rf SVGParser *.o bin/*.so *.svg

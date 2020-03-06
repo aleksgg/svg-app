@@ -121,11 +121,12 @@ $(document).ready(function() {
         data: { 
             fileName: "rects.svg",
             desc: "desc-query",
-	        title: "title-query"
+            title: "title-query",
+            paths: "paths-query"
         },
         success: function (data) {
             let fileNames = [];
-            
+
             data.forEach(element => {
                 fileNames.push(element.fileName);
             });
@@ -276,6 +277,8 @@ function populateSVGtable(data) {
 
     let row1 = table.insertRow(table.rows.length-2);
     let row2 = table.insertRow(table.rows.length-1);
+    
+    /* Row 3 is for the components and summary */
     let row3 = table.insertRow(table.rows.length);  //might be different with different browsers
     
 
@@ -314,6 +317,7 @@ function populateSVGtable(data) {
     
     let summaryElement = document.createElement('p');
     let summaryText = document.createTextNode("Test summary");
+    console.log(data.paths[0]);
     summaryElement.appendChild(summaryText);
     summaryCell.appendChild(summaryElement);
 
@@ -325,6 +329,8 @@ function populateSVGtable(data) {
 
 
 }
+
+
 
 function customizeButton(){
     const realUploadBtn = document.getElementById("real-upload-button");
