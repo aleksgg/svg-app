@@ -85,6 +85,13 @@ char * getSVGFileTitle(char * fileName);
 
 char * fileNameToPathJSON(char * fileName);
 
+char * fileNameToRectJSON(char * fileName);
+
+char * fileNameToGroupJSON(char * fileName);
+
+char * fileNameToCircleJSON(char * fileName);
+
+
 
 /* 
 TODO : attribute null

@@ -164,6 +164,12 @@ input[type=submit], button {
     font-weight: bold;
 }
 
+.svgViewer th {
+    color: #950740;
+    font-weight: bolder;
+    font-size: large;
+}
+
 #mySelect {
     width: 10%;
     height: 20%;

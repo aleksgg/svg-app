@@ -12,6 +12,46 @@
 #include "assert.h"
 
 
+char * fileNameToCircleJSON(char * fileName) {
+    SVGimage * img = NULL;
+
+    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+
+    char * jstring = circListToJSON(img->circles);
+
+    deleteSVGimage(img);
+
+    return jstring;
+}
+
+
+/* Add validateSVG */
+char * fileNameToGroupJSON(char * fileName) {
+    SVGimage * img = NULL;
+
+    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+
+    char * jstring = groupListToJSON(img->groups);
+
+    deleteSVGimage(img);
+
+    return jstring;
+}
+
+
+char * fileNameToRectJSON(char * fileName) {
+    SVGimage * img = NULL;
+
+    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+
+    char * jstring = rectListToJSON(img->rectangles);
+
+    deleteSVGimage(img);
+
+    return jstring;
+}
+
+
 
 char * fileNameToPathJSON(char * fileName) {
     SVGimage * img = NULL;

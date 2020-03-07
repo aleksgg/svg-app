@@ -101,6 +101,9 @@ let sharedLibrary = ffi.Library('parser/libsvgparse', {
     'getSVGFileDescription': [ 'string', [ 'string' ] ],
     'getSVGFileTitle': [ 'string', [ 'string' ] ],
     'fileNameToPathJSON' : [ 'string', [ 'string' ] ],
+    'fileNameToRectJSON' : [ 'string', [ 'string' ] ],
+    'fileNameToGroupJSON' : [ 'string', [ 'string' ] ],
+    'fileNameToCircleJSON' : [ 'string', [ 'string' ] ],
 });
 
 
@@ -116,17 +119,25 @@ app.get('/getSVGfiles', function(req, res){
     let desc = sharedLibrary.getSVGFileDescription(filePath);
     let title = sharedLibrary.getSVGFileTitle(filePath);
     let paths = sharedLibrary.fileNameToPathJSON(filePath);
+    let rects = sharedLibrary.fileNameToRectJSON(filePath);
+    let groups = sharedLibrary.fileNameToGroupJSON(filePath);
+    let circles = sharedLibrary.fileNameToCircleJSON(filePath);
+
     
     paths = JSON.parse(paths);
-    
-    console.log("path for " + filePath + " is : ");
-    console.log(paths);
-    
+    rects = JSON.parse(rects);
+    groups = JSON.parse(groups);
+    circles = JSON.parse(circles);
+
+
     let fullJSON = {
       fileName: file,
       desc: desc.toString(),
       title: title.toString(),
-      paths: paths
+      paths: paths,
+      rects: rects,
+      groups: groups,
+      circles: circles
     };
   
     jsonArr.push(fullJSON);

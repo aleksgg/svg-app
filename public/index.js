@@ -122,7 +122,10 @@ $(document).ready(function() {
             fileName: "rects.svg",
             desc: "desc-query",
             title: "title-query",
-            paths: "paths-query"
+            paths: "paths-query",
+            rects: "rects-query",
+            groups: "groups-query",
+            circles: "circles-query"
         },
         success: function (data) {
             let fileNames = [];
@@ -278,18 +281,11 @@ function populateSVGtable(data) {
     let row1 = table.insertRow(table.rows.length-2);
     let row2 = table.insertRow(table.rows.length-1);
     
-    /* Row 3 is for the components and summary */
-    let row3 = table.insertRow(table.rows.length);  //might be different with different browsers
-    
 
     let imgCell = row1.insertCell(0);
     
     let titleCell = row2.insertCell(0);
     let descCell = row2.insertCell(1);
-
-    let componentCell = row3.insertCell(0);
-    let summaryCell =  row3.insertCell(1);
-    let othrAttrCell = row3.insertCell(2);
 
     var img = document.createElement('img');
     img.src = imgLoc;
@@ -308,28 +304,138 @@ function populateSVGtable(data) {
     descElement.appendChild(descText);
     descCell.appendChild(descElement);
 
-
-    let compElement = document.createElement('p');
-    let compText = document.createTextNode("Test Component");
-    compElement.appendChild(compText);
-    componentCell.appendChild(compElement);
-
-    
-    let summaryElement = document.createElement('p');
-    let summaryText = document.createTextNode("Test summary");
-    console.log(data.paths[0]);
-    summaryElement.appendChild(summaryText);
-    summaryCell.appendChild(summaryElement);
-
-    
-    let othrAttrElement = document.createElement('p');
-    let othrAttrText = document.createTextNode("Test other attribute");
-    othrAttrElement.appendChild(othrAttrText);
-    othrAttrCell.appendChild(othrAttrElement);
-
+    addPaths(table, data);
+    addRects(table, data);
+    addGroups(table, data);
+    addCircles(table, data);
 
 }
 
+function addCircles(table, data) {
+    
+    for (let i = 0; i < data.circles.length; i++) {
+        let row = table.insertRow(table.rows.length);
+        
+        let componentCell = row.insertCell(0);
+        let summaryCell =  row.insertCell(1);
+        let othrAttrCell = row.insertCell(2);
+
+        
+        let compElement = document.createElement('p');
+        let compText = document.createTextNode("Circle " + (i+1));
+        compElement.appendChild(compText);
+        componentCell.appendChild(compElement);
+
+        
+        let summaryElement = document.createElement('p');
+        let summaryText = document.createTextNode("x= " + data.circles[i].cx + data.circles[i].units + "  y = " + data.circles[i].cy + data.circles[i].units + "  Radius: "+ data.circles[i].r + data.circles[i].units );
+        summaryElement.appendChild(summaryText);
+        summaryCell.appendChild(summaryElement);
+
+        
+        let othrAttrElement = document.createElement('p');
+        let othrAttrText = document.createTextNode(data.circles[i].numAttr);
+        othrAttrElement.appendChild(othrAttrText);
+        othrAttrCell.appendChild(othrAttrElement);
+    }
+    
+}
+
+
+function addRects(table, data) {
+    
+    for (let i = 0; i < data.rects.length; i++) {
+        let row = table.insertRow(table.rows.length);
+        
+        let componentCell = row.insertCell(0);
+        let summaryCell =  row.insertCell(1);
+        let othrAttrCell = row.insertCell(2);
+
+        
+        let compElement = document.createElement('p');
+        let compText = document.createTextNode("Rectangle " + (i+1));
+        compElement.appendChild(compText);
+        componentCell.appendChild(compElement);
+
+        
+        let summaryElement = document.createElement('p');
+        let summaryText = document.createTextNode("x= " + data.rects[i].x + data.rects[i].units+ 
+        "  y= " + data.rects[i].y + data.rects[i].units + "   width: " + data.rects[i].w + "  height: " + data.rects[i].h);
+        summaryElement.appendChild(summaryText);
+        summaryCell.appendChild(summaryElement);
+
+        
+        let othrAttrElement = document.createElement('p');
+        let othrAttrText = document.createTextNode(data.rects[i].numAttr);
+        othrAttrElement.appendChild(othrAttrText);
+        othrAttrCell.appendChild(othrAttrElement);
+    }
+    
+}
+
+
+function addGroups(table, data) {
+    
+    for (let i = 0; i < data.groups.length; i++) {
+        let row = table.insertRow(table.rows.length);
+        
+        let componentCell = row.insertCell(0);
+        let summaryCell =  row.insertCell(1);
+        let othrAttrCell = row.insertCell(2);
+
+        
+        let compElement = document.createElement('p');
+        let compText = document.createTextNode("Group " + (i+1));
+        compElement.appendChild(compText);
+        componentCell.appendChild(compElement);
+
+        console.log("Group " + i);
+        console.log(data.groups[i]);
+        
+        let summaryElement = document.createElement('p');
+        let summaryText = document.createTextNode("Children : " + data.groups[i].children);
+        summaryElement.appendChild(summaryText);
+        summaryCell.appendChild(summaryElement);
+
+        
+        let othrAttrElement = document.createElement('p');
+        let othrAttrText = document.createTextNode(data.groups[i].numAttr);
+        othrAttrElement.appendChild(othrAttrText);
+        othrAttrCell.appendChild(othrAttrElement);
+    }
+    
+}
+
+
+function addPaths(table, data) {
+    
+    for (let i = 0; i < data.paths.length; i++) {
+        let row = table.insertRow(table.rows.length);
+        
+        let componentCell = row.insertCell(0);
+        let summaryCell =  row.insertCell(1);
+        let othrAttrCell = row.insertCell(2);
+
+        
+        let compElement = document.createElement('p');
+        let compText = document.createTextNode("Path " + (i+1));
+        compElement.appendChild(compText);
+        componentCell.appendChild(compElement);
+
+        
+        let summaryElement = document.createElement('p');
+        let summaryText = document.createTextNode("Data : " + data.paths[i].d);
+        summaryElement.appendChild(summaryText);
+        summaryCell.appendChild(summaryElement);
+
+        
+        let othrAttrElement = document.createElement('p');
+        let othrAttrText = document.createTextNode(data.paths[i].numAttr);
+        othrAttrElement.appendChild(othrAttrText);
+        othrAttrCell.appendChild(othrAttrElement);
+    }
+    
+}
 
 
 function customizeButton(){
