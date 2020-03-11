@@ -125,7 +125,8 @@ $(document).ready(function() {
             paths: "paths-query",
             rects: "rects-query",
             groups: "groups-query",
-            circles: "circles-query"
+            circles: "circles-query",
+            rectsAttr: "rects-query",
         },
         success: function (data) {
             let fileNames = [];
@@ -369,6 +370,9 @@ function addRects(table, data) {
         let othrAttrText = document.createTextNode(data.rects[i].numAttr);
         othrAttrElement.appendChild(othrAttrText);
         othrAttrCell.appendChild(othrAttrElement);
+
+        console.log(data.rectsAttr[i]);
+        
     }
     
 }

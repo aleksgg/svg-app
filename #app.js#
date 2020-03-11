@@ -104,7 +104,6 @@ let sharedLibrary = ffi.Library('parser/libsvgparse', {
     'fileNameToRectJSON' : [ 'string', [ 'string' ] ],
     'fileNameToGroupJSON' : [ 'string', [ 'string' ] ],
     'fileNameToCircleJSON' : [ 'string', [ 'string' ] ],
-    'fileNameToRectAttr' : [ 'string', [ 'string' ] ],
 });
 
 
@@ -123,19 +122,13 @@ app.get('/getSVGfiles', function(req, res){
     let rects = sharedLibrary.fileNameToRectJSON(filePath);
     let groups = sharedLibrary.fileNameToGroupJSON(filePath);
     let circles = sharedLibrary.fileNameToCircleJSON(filePath);
-    
-    let rectAttributes = sharedLibrary.fileNameToRectAttr(filePath);
 
     
     paths = JSON.parse(paths);
     rects = JSON.parse(rects);
     groups = JSON.parse(groups);
     circles = JSON.parse(circles);
-    
-    rectAttributes = JSON.parse(rectAttributes);
-    
-    console.log(rectAttributes);
-    
+
 
     let fullJSON = {
       fileName: file,
@@ -144,8 +137,7 @@ app.get('/getSVGfiles', function(req, res){
       paths: paths,
       rects: rects,
       groups: groups,
-      circles: circles,
-      rectsAttr: rectAttributes
+      circles: circles
     };
   
     jsonArr.push(fullJSON);
@@ -193,11 +185,7 @@ app.get('/uploadedFiles', function(req, res){
   console.log("The data being sent is : ");
   console.log(jsonArr);
 
-  res.send(jsonArr);
-});
-
-
-
+  res.send(jsonAr
 //Sample endpoint
 app.get('/someendpoint', function(req , res){
   let retStr = req.query.name1 + " " + req.query.name2;

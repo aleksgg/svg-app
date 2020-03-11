@@ -11,6 +11,49 @@
 #include <ctype.h>
 #include "assert.h"
 
+char * fileNameToRectAttr(char * fileName) {
+    SVGimage * img = NULL;
+    int len = 0;
+    
+    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+    
+    char * jstring = malloc(sizeof(char) * 20);
+    strcpy(jstring, "[");
+    
+    ListIterator iter, tmpIter;
+    void * elem;
+    iter = createIterator(img->rectangles);
+    while ((elem = nextElement(&iter)) != NULL)
+    {
+        Rectangle *tmpRect = (Rectangle *)elem;
+
+        if (getLength(tmpRect->otherAttributes) > 0) {
+            char *string = attrListToJSON(tmpRect->otherAttributes);    
+        }
+        
+        len = len + strlen(string);
+        
+        jstring = realloc(jstring , sizeof(char) * (len + 20) );
+        
+        tmpIter = iter;
+        if (nextElement(&tmpIter) == NULL)
+        {
+            strcat(jstring, string);
+        }
+        else
+        {
+            strcat(jstring, strcat(string, ","));
+        }
+
+        free(string);
+    }
+    
+    strcat(jstring, "]");
+    
+    deleteSVGimage(img);
+    
+    return jstring;
+}
 
 char * fileNameToCircleJSON(char * fileName) {
     SVGimage * img = NULL;

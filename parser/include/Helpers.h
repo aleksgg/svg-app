@@ -91,6 +91,8 @@ char * fileNameToGroupJSON(char * fileName);
 
 char * fileNameToCircleJSON(char * fileName);
 
+char * fileNameToRectAttr(char * fileName);
+
 
 
 /* 
