@@ -305,6 +305,7 @@ function populateSVGtable(data) {
     descElement.appendChild(descText);
     descCell.appendChild(descElement);
 
+
     addPaths(table, data);
     addRects(table, data);
     addGroups(table, data);
@@ -324,6 +325,7 @@ function addCircles(table, data) {
         
         let compElement = document.createElement('p');
         let compText = document.createTextNode("Circle " + (i+1));
+        addToAttributeDropdown("Circle " + (i+1));
         compElement.appendChild(compText);
         componentCell.appendChild(compElement);
 
@@ -355,6 +357,7 @@ function addRects(table, data) {
         
         let compElement = document.createElement('p');
         let compText = document.createTextNode("Rectangle " + (i+1));
+        addToAttributeDropdown("Rectangle " + (i+1));
         compElement.appendChild(compText);
         componentCell.appendChild(compElement);
 
@@ -390,6 +393,7 @@ function addGroups(table, data) {
         
         let compElement = document.createElement('p');
         let compText = document.createTextNode("Group " + (i+1));
+        addToAttributeDropdown("Group " + (i+1));
         compElement.appendChild(compText);
         componentCell.appendChild(compElement);
 
@@ -423,6 +427,7 @@ function addPaths(table, data) {
         
         let compElement = document.createElement('p');
         let compText = document.createTextNode("Path " + (i+1));
+        addToAttributeDropdown("Path " + (i+1));
         compElement.appendChild(compText);
         componentCell.appendChild(compElement);
 
@@ -456,6 +461,25 @@ function customizeButton(){
     customFileBtn.addEventListener("click", function() {
         realFileBtn.click();
     });
+
+}
+
+function addToAttributeDropdown(text) {
+    let attributeDropdown = document.getElementById("attribute-dropdown");
+    
+    let attributeName = document.createElement("li");
+    attributeName.setAttribute("role","presentation");
+
+    let attributeNameA = document.createElement("a");
+    attributeNameA.setAttribute("role","menuitem");
+    attributeNameA.setAttribute("tabindex","-1");
+    attributeNameA.setAttribute("href","#");
+
+    let attributeNameText = document.createTextNode(text);
+
+    attributeNameA.appendChild(attributeNameText);
+    attributeName.appendChild(attributeNameA);
+    attributeDropdown.appendChild(attributeName);
 
 }
 
