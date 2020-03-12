@@ -112,6 +112,23 @@ $(document).ready(function() {
             console.log(error);
         }
     });
+    
+    $.ajax({
+        type: 'post',
+        dataType: 'application/json',
+        url: '/text',
+        data: { 
+            q: "test1212",
+            q2: "test3443",
+        },
+        success: function (data) {
+            console.log(data);
+        },
+        fail: function(error) {
+            console.log("Error with uploading file names. ");
+            console.log(error);
+        }
+    });
 
     $.ajax({
         type: 'get',
@@ -214,7 +231,7 @@ function handleRectAttributes(targeted, data) {
         attrDesc.appendChild(br);
         attrDesc.appendChild(attrDescTxt2);
         cell.appendChild(attrDesc);
-
+    
     }
     
     attrViewTable.replaceChild(newTable, attrViewTable.childNodes[0]);
@@ -556,5 +573,3 @@ function addToAttributeDropdown(text, curAttrDropDown) {
     curAttrDropDown.appendChild(attributeName);
 
 }
-
-

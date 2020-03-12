@@ -9,8 +9,10 @@ const app     = express();
 const path    = require("path");
 const fileUpload = require('express-fileupload');
 
+app.use(express.json())
 app.use(fileUpload());
 app.use(express.static(path.join(__dirname+'/uploads')));
+
 
 // Minimization
 const fs = require('fs');
@@ -45,6 +47,26 @@ app.get('/index.js',function(req,res){
     res.contentType('application/javascript');
     res.send(minimizedContents._obfuscatedCode);
   });
+});
+
+app.post('/text', function(req, res) {
+  var output = {};
+  
+  req.on('data', function(data) {
+    data = data.toString();
+    data = data.split('&');
+    for (var i = 0; i < data.length; i++) {
+        var tokenizedData = data[i].split("=");
+        output[tokenizedData[0]] = tokenizedData[1];
+    }
+    console.log("posted data:");
+    console.log(output);
+  })
+  
+  console.log(output); //empty array
+  
+  res.redirect('/');
+
 });
 
 //Respond to POST requests that upload files to uploads/ directory
