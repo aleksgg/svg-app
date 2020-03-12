@@ -93,6 +93,13 @@ char * fileNameToCircleJSON(char * fileName);
 
 char * fileNameToRectAttr(char * fileName);
 
+char * fileNameToCircAttr(char * fileName);
+
+char * fileNameToGroupAttr(char * fileName);
+
+char * fileNameToPathAttr(char * fileName);
+
+
 
 
 /* 

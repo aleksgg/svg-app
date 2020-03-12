@@ -11,6 +11,136 @@
 #include <ctype.h>
 #include "assert.h"
 
+char * fileNameToGroupAttr(char * fileName) {
+    SVGimage * img = NULL;
+    int len = 0;
+    
+    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+    
+    char * jstring = malloc(sizeof(char) * 20);
+    strcpy(jstring, "[");
+    
+    ListIterator iter, tmpIter;
+    void * elem;
+    iter = createIterator(img->groups);
+    while ((elem = nextElement(&iter)) != NULL)
+    {
+        Group *tmpRect = (Group *)elem;
+
+        char *string = attrListToJSON(tmpRect->otherAttributes);    
+        
+        len = len + strlen(string);
+        
+        jstring = realloc(jstring , sizeof(char) * (len + 20) );
+        
+        tmpIter = iter;
+        if (nextElement(&tmpIter) == NULL)
+        {
+            strcat(jstring, string);
+        }
+        else
+        {
+            strcat(jstring, strcat(string, ","));
+        }
+
+        free(string);
+    }
+    
+    strcat(jstring, "]");
+    
+    deleteSVGimage(img);
+    
+    return jstring;
+}
+
+
+
+char * fileNameToCircAttr(char * fileName) {
+    SVGimage * img = NULL;
+    int len = 0;
+    
+    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+    
+    char * jstring = malloc(sizeof(char) * 20);
+    strcpy(jstring, "[");
+    
+    ListIterator iter, tmpIter;
+    void * elem;
+    iter = createIterator(img->circles);
+    while ((elem = nextElement(&iter)) != NULL)
+    {
+        Circle *tmpRect = (Circle *)elem;
+
+
+        char *string = attrListToJSON(tmpRect->otherAttributes);    
+        
+        len = len + strlen(string);
+        
+        jstring = realloc(jstring , sizeof(char) * (len + 20) );
+        
+        tmpIter = iter;
+        if (nextElement(&tmpIter) == NULL)
+        {
+            strcat(jstring, string);
+        }
+        else
+        {
+            strcat(jstring, strcat(string, ","));
+        }
+
+        free(string);
+    }
+    
+    strcat(jstring, "]");
+    
+    deleteSVGimage(img);
+    
+    return jstring;
+}
+
+
+char * fileNameToPathAttr(char * fileName) {
+    SVGimage * img = NULL;
+    int len = 0;
+    
+    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+    
+    char * jstring = malloc(sizeof(char) * 20);
+    strcpy(jstring, "[");
+    
+    ListIterator iter, tmpIter;
+    void * elem;
+    iter = createIterator(img->paths);
+    while ((elem = nextElement(&iter)) != NULL)
+    {
+        Path *tmpRect = (Path *)elem;
+
+        char *string = attrListToJSON(tmpRect->otherAttributes);    
+        
+        len = len + strlen(string);
+        
+        jstring = realloc(jstring , sizeof(char) * (len + 20) );
+        
+        tmpIter = iter;
+        if (nextElement(&tmpIter) == NULL)
+        {
+            strcat(jstring, string);
+        }
+        else
+        {
+            strcat(jstring, strcat(string, ","));
+        }
+
+        free(string);
+    }
+    
+    strcat(jstring, "]");
+    
+    deleteSVGimage(img);
+    
+    return jstring;
+}
+
 char * fileNameToRectAttr(char * fileName) {
     SVGimage * img = NULL;
     int len = 0;
@@ -27,9 +157,7 @@ char * fileNameToRectAttr(char * fileName) {
     {
         Rectangle *tmpRect = (Rectangle *)elem;
 
-        if (getLength(tmpRect->otherAttributes) > 0) {
-            char *string = attrListToJSON(tmpRect->otherAttributes);    
-        }
+        char *string = attrListToJSON(tmpRect->otherAttributes);    
         
         len = len + strlen(string);
         

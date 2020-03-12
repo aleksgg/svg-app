@@ -143,10 +143,23 @@ $(document).ready(function() {
             groups: "groups-query",
             circles: "circles-query",
             rectsAttr: "rects-query",
+            circsAttr: "circs-query",
+            pathsAttr: "paths-query",
+            groupsAttr: "groups-query",
         },
         success: function (data) {
             let fileNames = [];
+            // console.log("Rectangle attributes : ");
+            // console.log(data[0].rectsAttr);
+            // console.log("Circle attributes : ");
+            // console.log(data[0].circsAttr);
+            // console.log("Path attributes : ");
+            // console.log(data[0].pathsAttr);
+            // console.log("Group attributes : ");
+            // console.log(data[0].groupsAttr);
 
+
+            
             data.forEach(element => {
                 fileNames.push(element.fileName);
             });
@@ -189,15 +202,35 @@ function listenShowAttributeDropDown(data) {
     let anakinSkywalker;    
     document.getElementById("main-attribute-dropdown").addEventListener("click",function(e) {
         if(e.target && e.target.nodeName == "A") {
-            console.log("|"+e.target.text+"|");
-            handleRectAttributes(String(e.target.text), data);
+            let target = String(e.target.text);
+            if (target[0] == 'R') {
+                handleShowAttributes(target, data.rectsAttr);    
+            }
+            else if (target[0] == 'C') {
+                handleShowAttributes(target, data.circsAttr);    
+            }
+            else if (target[0] == 'P') {
+                handleShowAttributes(target, data.pathsAttr);    
+            }
+            else if (target[0] == 'G') {
+                handleShowAttributes(target, data.groupsAttr);    
+            }
         }
     });
 }
 
-function handleRectAttributes(targeted, data) {
+function handleShowAttributes(targeted, data) {
     let index = parseInt(targeted.charAt(targeted.length-1)) - 1;
-    console.log(data.rectsAttr[index].length);
+    console.log("INDEX :");
+    console.log(index);
+    console.log("DATA:");
+    if (data.length == 0) {
+        return;
+    }
+    
+    console.log(data);
+    console.log("DATA INDEX :");
+    console.log(data[index]);
 
     let closeButton = document.querySelector(".close-button");
     //let modalDiv = document.querySelector(".myModal");
@@ -219,14 +252,14 @@ function handleRectAttributes(targeted, data) {
     newTable.appendChild(newTableHead);
 
 
-    for (let i = 0; i < data.rectsAttr[index].length; i++) {
+    for (let i = 0; i < data[index].length; i++) {
         let row = newTable.insertRow();
         let cell = row.insertCell(0);
         
         let attrDesc = document.createElement('p');
         let br = document.createElement('br');
-        let attrDescTxt = document.createTextNode("Attribute Name: " + data.rectsAttr[index][i].name);
-        let attrDescTxt2 = document.createTextNode("Attribute Value: " + data.rectsAttr[index][i].value);
+        let attrDescTxt = document.createTextNode("Attribute Name: " + data[index][i].name);
+        let attrDescTxt2 = document.createTextNode("Attribute Value: " + data[index][i].value);
         attrDesc.appendChild(attrDescTxt);
         attrDesc.appendChild(br);
         attrDesc.appendChild(attrDescTxt2);
@@ -362,7 +395,6 @@ function populateSVGtable(data) {
     mainTable.replaceChild(table, mainTable.childNodes[0]);
     
     /* Populates the table added with the json data provided */     
-    console.log("Row lenght is : " + table.rows.length);
 
 
     let row1 = table.insertRow(table.rows.length-2);
@@ -466,7 +498,6 @@ function addRects(table, data, curAttrDropDown) {
         othrAttrElement.appendChild(othrAttrText);
         othrAttrCell.appendChild(othrAttrElement);
 
-        console.log(data.rectsAttr[i]);
         
     }
     
@@ -489,8 +520,6 @@ function addGroups(table, data, curAttrDropDown) {
         compElement.appendChild(compText);
         componentCell.appendChild(compElement);
 
-        console.log("Group " + i);
-        console.log(data.groups[i]);
         
         let summaryElement = document.createElement('p');
         let summaryText = document.createTextNode("Children : " + data.groups[i].children);

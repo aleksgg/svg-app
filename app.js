@@ -127,6 +127,9 @@ let sharedLibrary = ffi.Library('parser/libsvgparse', {
     'fileNameToGroupJSON' : [ 'string', [ 'string' ] ],
     'fileNameToCircleJSON' : [ 'string', [ 'string' ] ],
     'fileNameToRectAttr' : [ 'string', [ 'string' ] ],
+    'fileNameToCircAttr' : [ 'string', [ 'string' ] ],
+    'fileNameToPathAttr' : [ 'string', [ 'string' ] ],
+    'fileNameToGroupAttr' : [ 'string', [ 'string' ] ],
 });
 
 
@@ -147,6 +150,9 @@ app.get('/getSVGfiles', function(req, res){
     let circles = sharedLibrary.fileNameToCircleJSON(filePath);
     
     let rectAttributes = sharedLibrary.fileNameToRectAttr(filePath);
+    let circAttributes = sharedLibrary.fileNameToCircAttr(filePath);
+    let pathAttributes = sharedLibrary.fileNameToPathAttr(filePath);
+    let groupAttributes = sharedLibrary.fileNameToGroupAttr(filePath);
 
     
     paths = JSON.parse(paths);
@@ -155,6 +161,9 @@ app.get('/getSVGfiles', function(req, res){
     circles = JSON.parse(circles);
     
     rectAttributes = JSON.parse(rectAttributes);
+    circAttributes = JSON.parse(circAttributes);
+    pathAttributes = JSON.parse(pathAttributes);
+    groupAttributes = JSON.parse(groupAttributes);
     
     console.log(rectAttributes);
     
@@ -167,7 +176,10 @@ app.get('/getSVGfiles', function(req, res){
       rects: rects,
       groups: groups,
       circles: circles,
-      rectsAttr: rectAttributes
+      rectsAttr: rectAttributes,
+      circsAttr: circAttributes,
+      pathsAttr: pathAttributes,
+      groupsAttr: groupAttributes
     };
   
     jsonArr.push(fullJSON);
