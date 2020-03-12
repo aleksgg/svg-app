@@ -1,4 +1,3 @@
-
 // Put all onload AJAX calls here, and event listeners
 $(document).ready(function() {
     
@@ -137,6 +136,7 @@ $(document).ready(function() {
             
             addDropdownContent(fileNames);
             listenDropDown(data);
+            //listenShowAttributeDropDown();
 
         },
         fail: function(error) {
@@ -167,6 +167,69 @@ $(document).ready(function() {
 
 });
 
+function listenShowAttributeDropDown(data) {
+
+    let anakinSkywalker;    
+    document.getElementById("main-attribute-dropdown").addEventListener("click",function(e) {
+        if(e.target && e.target.nodeName == "A") {
+            console.log("|"+e.target.text+"|");
+            handleRectAttributes(String(e.target.text), data);
+        }
+    });
+}
+
+function handleRectAttributes(targeted, data) {
+    let index = parseInt(targeted.charAt(targeted.length-1)) - 1;
+    console.log(data.rectsAttr[index].length);
+
+    let closeButton = document.querySelector(".close-button");
+    //let modalDiv = document.querySelector(".myModal");
+    let attrViewTable = document.getElementById("main-table");
+    
+    let newTable = document.createElement("table");
+    newTable.id = "attribute-view-table";
+    newTable.className = "attrViewTable";
+    
+    let newTableHead = document.createElement("thead");
+    
+    let newTr = document.createElement("tr");
+    let newTh = document.createElement("th");
+    let thText = document.createTextNode("Attributes");
+    
+    newTh.appendChild(thText);
+    newTr.appendChild(newTh);
+    newTableHead.appendChild(newTr);
+    newTable.appendChild(newTableHead);
+
+
+    for (let i = 0; i < data.rectsAttr[index].length; i++) {
+        let row = newTable.insertRow();
+        let cell = row.insertCell(0);
+        
+        let attrDesc = document.createElement('p');
+        let br = document.createElement('br');
+        let attrDescTxt = document.createTextNode("Attribute Name: " + data.rectsAttr[index][i].name);
+        let attrDescTxt2 = document.createTextNode("Attribute Value: " + data.rectsAttr[index][i].value);
+        attrDesc.appendChild(attrDescTxt);
+        attrDesc.appendChild(br);
+        attrDesc.appendChild(attrDescTxt2);
+        cell.appendChild(attrDesc);
+
+    }
+    
+    attrViewTable.replaceChild(newTable, attrViewTable.childNodes[0]);
+
+    toggleModal();
+    closeButton.addEventListener("click", toggleModal);
+
+
+}
+
+function toggleModal() {
+    let modalDiv = document.querySelector(".myModal");
+    modalDiv.classList.toggle("show-modal");
+}
+
 function addDropdownContent(fileNames) {
     var myParent = document.getElementById("dropdownList");
 
@@ -183,6 +246,7 @@ function addDropdownContent(fileNames) {
     }
 }
 
+
 function listenDropDown(data) {
     document.getElementById('mySelect').addEventListener('change', warn, true);
     let anakinSkywalker;
@@ -195,10 +259,12 @@ function listenDropDown(data) {
             if( data[i].fileName == anakinSkywalker) {
                 console.log("The chosen one is " + data[i].fileName);
                 populateSVGtable(data[i]);
+                listenShowAttributeDropDown(data[i]);
             }
         }
     }
 }
+
 
 function populateSVGtable(data) {
     let imgLoc = "./uploads/" + data.fileName;
@@ -270,7 +336,10 @@ function populateSVGtable(data) {
     
     /* Hides the default table */
     let defaultTable = document.getElementById("defaultTable")
-    defaultTable.style.visibility = "hidden"
+    //defaultTable.style.visibility = "hidden"
+    if (defaultTable != null) {
+        defaultTable.remove();    
+    }
     
     /* Replaces the child of the main table with the new dynamic table created. Adds it if none exist. */
     mainTable.replaceChild(table, mainTable.childNodes[0]);
@@ -305,15 +374,21 @@ function populateSVGtable(data) {
     descElement.appendChild(descText);
     descCell.appendChild(descElement);
 
-
-    addPaths(table, data);
-    addRects(table, data);
-    addGroups(table, data);
-    addCircles(table, data);
+    
+    let mainAttrDropDown = document.getElementById("main-attribute-dropdown")
+    let curAttrDropDown = document.createElement("ul");
+    
+    addPaths(table, data , curAttrDropDown);
+    addRects(table, data , curAttrDropDown);
+    addGroups(table, data , curAttrDropDown);
+    addCircles(table, data ,curAttrDropDown);
+    
+    mainAttrDropDown.innerHTML = curAttrDropDown.innerHTML;
 
 }
 
-function addCircles(table, data) {
+
+function addCircles(table, data, curAttrDropDown) {
     
     for (let i = 0; i < data.circles.length; i++) {
         let row = table.insertRow(table.rows.length);
@@ -325,7 +400,7 @@ function addCircles(table, data) {
         
         let compElement = document.createElement('p');
         let compText = document.createTextNode("Circle " + (i+1));
-        addToAttributeDropdown("Circle " + (i+1));
+        addToAttributeDropdown("Circle " + (i+1), curAttrDropDown);
         compElement.appendChild(compText);
         componentCell.appendChild(compElement);
 
@@ -345,7 +420,7 @@ function addCircles(table, data) {
 }
 
 
-function addRects(table, data) {
+function addRects(table, data, curAttrDropDown) {
     
     for (let i = 0; i < data.rects.length; i++) {
         let row = table.insertRow(table.rows.length);
@@ -357,7 +432,7 @@ function addRects(table, data) {
         
         let compElement = document.createElement('p');
         let compText = document.createTextNode("Rectangle " + (i+1));
-        addToAttributeDropdown("Rectangle " + (i+1));
+        addToAttributeDropdown("Rectangle " + (i+1), curAttrDropDown);
         compElement.appendChild(compText);
         componentCell.appendChild(compElement);
 
@@ -381,7 +456,7 @@ function addRects(table, data) {
 }
 
 
-function addGroups(table, data) {
+function addGroups(table, data, curAttrDropDown) {
     
     for (let i = 0; i < data.groups.length; i++) {
         let row = table.insertRow(table.rows.length);
@@ -393,7 +468,7 @@ function addGroups(table, data) {
         
         let compElement = document.createElement('p');
         let compText = document.createTextNode("Group " + (i+1));
-        addToAttributeDropdown("Group " + (i+1));
+        addToAttributeDropdown("Group " + (i+1), curAttrDropDown);
         compElement.appendChild(compText);
         componentCell.appendChild(compElement);
 
@@ -415,7 +490,7 @@ function addGroups(table, data) {
 }
 
 
-function addPaths(table, data) {
+function addPaths(table, data, curAttrDropDown) {
     
     for (let i = 0; i < data.paths.length; i++) {
         let row = table.insertRow(table.rows.length);
@@ -427,7 +502,7 @@ function addPaths(table, data) {
         
         let compElement = document.createElement('p');
         let compText = document.createTextNode("Path " + (i+1));
-        addToAttributeDropdown("Path " + (i+1));
+        addToAttributeDropdown("Path " + (i+1), curAttrDropDown);
         compElement.appendChild(compText);
         componentCell.appendChild(compElement);
 
@@ -464,8 +539,7 @@ function customizeButton(){
 
 }
 
-function addToAttributeDropdown(text) {
-    let attributeDropdown = document.getElementById("attribute-dropdown");
+function addToAttributeDropdown(text, curAttrDropDown) {
     
     let attributeName = document.createElement("li");
     attributeName.setAttribute("role","presentation");
@@ -473,13 +547,13 @@ function addToAttributeDropdown(text) {
     let attributeNameA = document.createElement("a");
     attributeNameA.setAttribute("role","menuitem");
     attributeNameA.setAttribute("tabindex","-1");
-    attributeNameA.setAttribute("href","#");
+    //attributeNameA.setAttribute("href","#");
 
     let attributeNameText = document.createTextNode(text);
 
     attributeNameA.appendChild(attributeNameText);
     attributeName.appendChild(attributeNameA);
-    attributeDropdown.appendChild(attributeName);
+    curAttrDropDown.appendChild(attributeName);
 
 }
 
