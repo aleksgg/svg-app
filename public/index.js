@@ -165,7 +165,10 @@ $(document).ready(function() {
             });
             
             addDropdownContent(fileNames);
-            listenDropDown(data);
+            let test = listenDropDown(data);
+            console.log(":::::::::::test:::::::::::");
+            console.log(global1);
+            console.log("::::::::::::::::::::::");
             //listenShowAttributeDropDown();
 
         },
@@ -204,15 +207,19 @@ function listenShowAttributeDropDown(data) {
         if(e.target && e.target.nodeName == "A") {
             let target = String(e.target.text);
             if (target[0] == 'R') {
+                console.log("Inside R with file " + data.fileName);
                 handleShowAttributes(target, data.rectsAttr);    
             }
             else if (target[0] == 'C') {
+                console.log("Inside C with file " + data.fileName);
                 handleShowAttributes(target, data.circsAttr);    
             }
             else if (target[0] == 'P') {
+                console.log("Inside P with file " + data.fileName);
                 handleShowAttributes(target, data.pathsAttr);    
             }
             else if (target[0] == 'G') {
+                console.log("Inside G with file " + data.fileName);
                 handleShowAttributes(target, data.groupsAttr);    
             }
         }
@@ -220,18 +227,23 @@ function listenShowAttributeDropDown(data) {
 }
 
 function handleShowAttributes(targeted, data) {
-    let index = parseInt(targeted.charAt(targeted.length-1)) - 1;
-    console.log("INDEX :");
-    console.log(index);
-    console.log("DATA:");
+
     if (data.length == 0) {
         return;
     }
+    let index = parseInt(targeted.charAt(targeted.length-1)) - 1;
     
+    console.log();
+    console.log("-----------------");
+    console.log("INDEX :");
+    console.log(index);
+    console.log("DATA:");
     console.log(data);
     console.log("DATA INDEX :");
     console.log(data[index]);
-
+    console.log("-----------------");
+    console.log();
+    
     let closeButton = document.querySelector(".close-button");
     //let modalDiv = document.querySelector(".myModal");
     let attrViewTable = document.getElementById("main-table");
@@ -296,6 +308,7 @@ function addDropdownContent(fileNames) {
     }
 }
 
+var global1;
 
 function listenDropDown(data) {
     document.getElementById('mySelect').addEventListener('change', warn, true);
@@ -307,9 +320,29 @@ function listenDropDown(data) {
         anakinSkywalker = dropDown.currentTarget.value;
         for (let i = 0; i < data.length; i++) {
             if( data[i].fileName == anakinSkywalker) {
-                console.log("The chosen one is " + data[i].fileName);
+                console.log("The chosen one is " + data[i].fileName); 
                 populateSVGtable(data[i]);
-                listenShowAttributeDropDown(data[i]);
+                document.getElementById("main-attribute-dropdown").addEventListener("click",function(e) {
+                    if(e.target && e.target.nodeName == "A") {
+                        let target = String(e.target.text);
+                        if ((target[0] == 'R') && (data[i].fileName === anakinSkywalker)) {
+                            console.log("Inside R with file " + data[i].fileName);
+                            handleShowAttributes(target, data[i].rectsAttr);    
+                        }
+                        else if ((target[0] == 'C') && (data[i].fileName === anakinSkywalker)) {
+                            console.log("Inside C with file " + data[i].fileName);
+                            handleShowAttributes(target, data[i].circsAttr);    
+                        }
+                        else if ((target[0] == 'P') && (data[i].fileName === anakinSkywalker)) {
+                            console.log("Inside P with file " + data[i].fileName);
+                            handleShowAttributes(target, data[i].pathsAttr);    
+                        }
+                        else if ((target[0] == 'G') && (data[i].fileName === anakinSkywalker)) {
+                            console.log("Inside G with file " + data[i].fileName);
+                            handleShowAttributes(target, data[i].groupsAttr);    
+                        }
+                    }
+                })
             }
         }
     }
@@ -433,6 +466,7 @@ function populateSVGtable(data) {
     addCircles(table, data ,curAttrDropDown);
     
     mainAttrDropDown.innerHTML = curAttrDropDown.innerHTML;
+
 
 }
 
