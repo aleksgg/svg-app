@@ -149,16 +149,6 @@ $(document).ready(function() {
         },
         success: function (data) {
             let fileNames = [];
-            // console.log("Rectangle attributes : ");
-            // console.log(data[0].rectsAttr);
-            // console.log("Circle attributes : ");
-            // console.log(data[0].circsAttr);
-            // console.log("Path attributes : ");
-            // console.log(data[0].pathsAttr);
-            // console.log("Group attributes : ");
-            // console.log(data[0].groupsAttr);
-
-
             
             data.forEach(element => {
                 fileNames.push(element.fileName);
@@ -179,6 +169,22 @@ $(document).ready(function() {
     });
     
     customizeButton();
+    
+    clsBtn = document.getElementById("cls-btn");
+    openBtn = document.getElementById("open-button");
+    
+    clsBtn = document.getElementById("cls-btn");
+    openBtn.addEventListener("click", openForm);
+    
+    function openForm() {
+        document.getElementById("myForm").style.display = "block";
+      }
+      
+    function closeForm() {
+        document.getElementById("myForm").style.display = "none";
+    }
+    
+    var formData = JSON.stringify($("#myForm").serializeArray());
 
     // Event listener form example , we can use this instead explicitly listening for events
     // No redirects if possible
