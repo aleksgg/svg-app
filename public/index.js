@@ -113,22 +113,22 @@ $(document).ready(function() {
         }
     });
     
-    $.ajax({
-        type: 'post',
-        dataType: 'application/json',
-        url: '/text',
-        data: { 
-            q: "test1212",
-            q2: "test3443",
-        },
-        success: function (data) {
-            console.log(data);
-        },
-        fail: function(error) {
-            console.log("Error with uploading file names. ");
-            console.log(error);
-        }
-    });
+    // $.ajax({
+    //     type: 'post',
+    //     dataType: 'application/json',
+    //     url: '/text',
+    //     data: { 
+    //         q: "test1212",
+    //         q2: "test3443",
+    //     },
+    //     success: function (data) {
+    //         console.log(data);
+    //     },
+    //     fail: function(error) {
+    //         console.log("Error with uploading file names. ");
+    //         console.log(error);
+    //     }
+    // });
 
     $.ajax({
         type: 'get',
@@ -156,9 +156,6 @@ $(document).ready(function() {
             
             addDropdownContent(fileNames);
             let test = listenDropDown(data);
-            console.log(":::::::::::test:::::::::::");
-            console.log(global1);
-            console.log("::::::::::::::::::::::");
             //listenShowAttributeDropDown();
 
         },
@@ -173,9 +170,10 @@ $(document).ready(function() {
     clsBtn = document.getElementById("cls-btn");
     openBtn = document.getElementById("open-button");
     
-    clsBtn = document.getElementById("cls-btn");
+
     openBtn.addEventListener("click", openForm);
-    
+    clsBtn .addEventListener("click", closeForm);
+
     function openForm() {
         document.getElementById("myForm").style.display = "block";
       }
@@ -184,7 +182,37 @@ $(document).ready(function() {
         document.getElementById("myForm").style.display = "none";
     }
     
-    var formData = JSON.stringify($("#myForm").serializeArray());
+    let submitBtn = document.getElementById("submit-btn");
+    submitBtn.addEventListener("click", handleSubmit);
+
+    function handleSubmit() {
+        console.log("Submitted");
+        let svgNameInput = document.getElementById("svgNameInput");
+        let descriptionInput = document.getElementById("descriptionInput");
+        let titleInput = document.getElementById("titleInput");
+        $.ajax({
+            type: 'post',
+            dataType: 'application/json',
+            url: '/text',
+            data: { 
+                name: String(svgNameInput.value),
+                title: String(titleInput.value),
+                description: String(descriptionInput.value),
+            },
+            success: function (data) {
+                console.log(data);
+            },
+            fail: function(error) {
+                console.log("Error with uploading file names. ");
+                console.log(error);
+            }
+        });
+        closeForm();
+        window.location.reload();
+    }
+    
+    openBtn.addEventListener("click", openForm);
+
 
     // Event listener form example , we can use this instead explicitly listening for events
     // No redirects if possible

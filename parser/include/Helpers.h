@@ -99,6 +99,7 @@ char * fileNameToGroupAttr(char * fileName);
 
 char * fileNameToPathAttr(char * fileName);
 
+char * writeWithFileName(char * json, char * name);
 
 
 

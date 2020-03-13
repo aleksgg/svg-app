@@ -296,20 +296,16 @@ input[type=submit], button {
     font-size: large;
 }
 
-{box-sizing: border-box;}
+/* {box-sizing: border-bo */
 
 /* Button used to open the contact form - fixed at the bottom of the page */
 .open-button {
-  background-color: #555;
-  color: white;
-  padding: 16px 20px;
-  border: none;
-  cursor: pointer;
-  opacity: 0.8;
-  position: fixed;
-  bottom: 23px;
-  right: 28px;
-  width: 280px;
+    padding: 5px;
+    color: white;
+    background-color: #009578;
+    border: 1px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
 /* The popup form - hidden by default */
@@ -326,7 +322,7 @@ input[type=submit], button {
 .form-container {
   max-width: 300px;
   padding: 10px;
-  background-color: white;
+  background-color: #009578;
 }
 
 /* Full-width input fields */
@@ -346,7 +342,7 @@ input[type=submit], button {
 
 /* Set a style for the submit/login button */
 .form-container .btn {
-  background-color: #4CAF50;
+  background-color: #950740;
   color: white;
   padding: 16px 20px;
   border: none;

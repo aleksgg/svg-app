@@ -11,6 +11,16 @@
 #include <ctype.h>
 #include "assert.h"
 
+char * writeWithFileName(char * json, char * name) {
+    SVGimage * img = JSONtoSVG(json);
+    
+    writeSVGimage(img, name);
+    
+    deleteSVGimage(img);
+    
+    return NULL;
+}
+
 char * fileNameToGroupAttr(char * fileName) {
     SVGimage * img = NULL;
     int len = 0;

@@ -59,11 +59,36 @@ app.post('/text', function(req, res) {
         var tokenizedData = data[i].split("=");
         output[tokenizedData[0]] = tokenizedData[1];
     }
-    console.log("posted data:");
-    console.log(output);
+    
+    let titleString = "";
+    let tokenizedTitle = output.title.split("+");
+    tokenizedTitle.forEach(element => {
+      titleString = titleString + element + " ";
+    });
+
+    let descString = "";
+    let tokenizedDesc = output.description.split("+");
+    tokenizedDesc.forEach(element => {
+      descString = descString + element + " ";
+    });
+    
+    console.log("Title:");
+    console.log(titleString);
+    
+    console.log("Description:");
+    console.log(descString);
+    
+    let toCreate = {
+      title: titleString,
+      descr: descString,
+    }
+    
+    toCreate = JSON.stringify(toCreate);
+    let fileName = "./uploads/" + output.name + ".svg";
+    sharedLibrary.writeWithFileName(toCreate, fileName);
+
   })
   
-  console.log(output); //empty array
   
   res.redirect('/');
 
@@ -111,7 +136,7 @@ function getFileSize(fileName) {
   var fileStats = fs.statSync(fileName);
   
   var fileSizeInBytes = fileStats["size"];
-  
+
   fileSizeInBytes = fileSizeInBytes / 1024;
   
   return Math.round(fileSizeInBytes);
@@ -130,6 +155,7 @@ let sharedLibrary = ffi.Library('parser/libsvgparse', {
     'fileNameToCircAttr' : [ 'string', [ 'string' ] ],
     'fileNameToPathAttr' : [ 'string', [ 'string' ] ],
     'fileNameToGroupAttr' : [ 'string', [ 'string' ] ],
+    'writeWithFileName' : [ 'string', [ 'string', 'string' ] ],
 });
 
 

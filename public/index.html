@@ -12,9 +12,11 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <!--<link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon"> -->
     <!-- Custom CSS -->
     <link rel="stylesheet" type="text/css" href="/style.css">
     <!-- Custom CSS End -->
+
 </head>
 <body>
    <!-- <h3>SVG Parser Web Application</h3>
@@ -28,12 +30,8 @@
     </header>
     
     <div id=page-content>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
-        <p></p>
+
+        <p><br></p>
         <h3 id="fileLogTitle">File Log Panel</h3>
         
         <div class="fileLog" >
@@ -57,22 +55,7 @@
                     </tbody>    
                 </div>    
             </table>
-            <!-- <button class="open-button" id="open-button" onclick="openForm()" >Open Form</button>
-                <div class="form-popup" id="myForm">
-                <form action="/text" class="form-container" id='myForm'>
-                  <h1>Login</h1>
-              
-                  <label for="email"><b>Email</b></label>
-                  <input type="text" placeholder="Enter Email" name="email" required>
-              
-                  <label for="psw"><b>Password</b></label>
-                  <input type="password" placeholder="Enter Password" name="psw" required>
-              
-                  <input value="submit" type="submit" class="btn">Login</input>
-                  <button id="cls-btn" class="btn cancel" onclick="closeForm()">Close</button>
-                </form>
-            </div>
-        </div> -->
+        </div> 
 
         <form id='uploadFile' action="/upload" method="POST" enctype="multipart/form-data">
             <input id="real-file-button" type="file" name="uploadFile" accept=".svg" hidden="hidden">
@@ -81,15 +64,25 @@
             <input id="real-upload-button" type="submit" value="upload" hidden="hidden">
             <button type="button" id="upload-button">Upload</button>
         </form> 
+        <button class="open-button" id="open-button">Create Image</button>
+        <div class="form-popup" id="myForm">
+            <form action="" class="form-container" id='myForm'>
+            
+            <label for="svgNameInput"><b>SVG File Name</b></label>
+            <input type="text" id="svgNameInput" placeholder="Enter SVG Name" name="svgNameInput" >
+
+            <label for="titleInput"><b>Title</b></label>
+            <input type="text" id="titleInput" placeholder="Enter Title" name="titleInput" >
         
+            <label for="descriptionInput"><b>Description</b></label>
+            <input type="text" id="descriptionInput" placeholder="Enter Description" name="descriptionInput">
         
-        <p></p>
-        <p></p>
-        <p></p>
+            <input value="Create" id="submit-btn" class="btn"></input>
+            <button id="cls-btn" class="btn cancel">Close</button>
+            </form>
+        </div>
         
-        <p></p>
-        <p></p>
-        <p></p>
+        <p><br><br><br></p>
         
         <h3 id="svgPanelTitle">SVGimage Panel</h3>
         <div id="dropdownList">
@@ -98,9 +91,6 @@
             </select>
         </div>
 
-        <p></p>
-        <p></p>
-        <p></p>
 
         <table id="mainSVGtable">
             <table id="defaultTable" class="defaultTable">
