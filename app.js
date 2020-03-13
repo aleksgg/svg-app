@@ -101,7 +101,7 @@ function getFileSize(fileName) {
 }
 
 
-let sharedLibrary = ffi.Library('parser/libsvgparse', {
+let sharedLibrary = ffi.Library('./libsvgparse', {
     'svgFileToJSON': [ 'string', [ 'string' ] ],
     'getSVGFileDescription': [ 'string', [ 'string' ] ],
     'getSVGFileTitle': [ 'string', [ 'string' ] ],

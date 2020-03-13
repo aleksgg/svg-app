@@ -39,7 +39,7 @@ char * fileNameToGroupAttr(char * fileName) {
     SVGimage * img = NULL;
     int len = 0;
     
-    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+    img = createValidSVGimage(fileName, "parser/svg.xsd");
     
     char * jstring = malloc(sizeof(char) * 20);
     strcpy(jstring, "[");
@@ -83,7 +83,7 @@ char * fileNameToCircAttr(char * fileName) {
     SVGimage * img = NULL;
     int len = 0;
     
-    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+    img = createValidSVGimage(fileName, "parser/svg.xsd");
     
     char * jstring = malloc(sizeof(char) * 20);
     strcpy(jstring, "[");
@@ -127,7 +127,7 @@ char * fileNameToPathAttr(char * fileName) {
     SVGimage * img = NULL;
     int len = 0;
     
-    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+    img = createValidSVGimage(fileName, "parser/svg.xsd");
     
     char * jstring = malloc(sizeof(char) * 20);
     strcpy(jstring, "[");
@@ -169,7 +169,7 @@ char * fileNameToRectAttr(char * fileName) {
     SVGimage * img = NULL;
     int len = 0;
     
-    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+    img = createValidSVGimage(fileName, "parser/svg.xsd");
     
     char * jstring = malloc(sizeof(char) * 20);
     strcpy(jstring, "[");
@@ -210,7 +210,7 @@ char * fileNameToRectAttr(char * fileName) {
 char * fileNameToCircleJSON(char * fileName) {
     SVGimage * img = NULL;
 
-    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+    img = createValidSVGimage(fileName, "parser/svg.xsd");
 
     char * jstring = circListToJSON(img->circles);
 
@@ -224,7 +224,7 @@ char * fileNameToCircleJSON(char * fileName) {
 char * fileNameToGroupJSON(char * fileName) {
     SVGimage * img = NULL;
 
-    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+    img = createValidSVGimage(fileName, "parser/svg.xsd");
 
     char * jstring = groupListToJSON(img->groups);
 
@@ -237,7 +237,7 @@ char * fileNameToGroupJSON(char * fileName) {
 char * fileNameToRectJSON(char * fileName) {
     SVGimage * img = NULL;
 
-    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+    img = createValidSVGimage(fileName, "parser/svg.xsd");
 
     char * jstring = rectListToJSON(img->rectangles);
 
@@ -251,7 +251,7 @@ char * fileNameToRectJSON(char * fileName) {
 char * fileNameToPathJSON(char * fileName) {
     SVGimage * img = NULL;
 
-    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+    img = createValidSVGimage(fileName, "parser/svg.xsd");
 
     char * jstring = pathListToJSON(img->paths);
 
@@ -264,7 +264,7 @@ char * fileNameToPathJSON(char * fileName) {
 char * svgFileToJSON(char * fileName) {
     SVGimage * img = NULL;
     
-    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+    img = createValidSVGimage(fileName, "parser/svg.xsd");
 
     char * jstring = SVGtoJSON(img);
     
@@ -277,7 +277,7 @@ char * svgFileToJSON(char * fileName) {
 char * getSVGFileTitle(char * fileName) {
 	SVGimage * img = NULL;
 
-	img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+	img = createValidSVGimage(fileName, "parser/svg.xsd");
 
 	char * desc = malloc(sizeof(char) * 257);
 	strcpy(desc, img->title);
@@ -292,7 +292,7 @@ char * getSVGFileTitle(char * fileName) {
 char * getSVGFileDescription(char * fileName) {
     SVGimage * img = NULL;
     
-    img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+    img = createValidSVGimage(fileName, "parser/svg.xsd");
 
     //char * jstring = descTitleToJSON(img);
     char * desc = malloc(sizeof(char) * 257);
