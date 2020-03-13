@@ -36,9 +36,9 @@ app.get('/style.css',function(req,res){
 /* 
 TODO : Remove this when you figure out the error. 
 */
-app.get('/index.js',function(req,res){
-  res.sendFile(path.join(__dirname+'/public/index.js'));
-});
+//app.get('/index.js',function(req,res){
+//  res.sendFile(path.join(__dirname+'/public/index.js'));
+//});
 
 // Send obfuscated JS, do not change
 app.get('/index.js',function(req,res){
