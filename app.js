@@ -49,50 +49,6 @@ app.get('/index.js',function(req,res){
   });
 });
 
-app.post('/text', function(req, res) {
-  var output = {};
-  
-  req.on('data', function(data) {
-    data = data.toString();
-    data = data.split('&');
-    for (var i = 0; i < data.length; i++) {
-        var tokenizedData = data[i].split("=");
-        output[tokenizedData[0]] = tokenizedData[1];
-    }
-    
-    let titleString = "";
-    let tokenizedTitle = output.title.split("+");
-    tokenizedTitle.forEach(element => {
-      titleString = titleString + element + " ";
-    });
-
-    let descString = "";
-    let tokenizedDesc = output.description.split("+");
-    tokenizedDesc.forEach(element => {
-      descString = descString + element + " ";
-    });
-    
-    console.log("Title:");
-    console.log(titleString);
-    
-    console.log("Description:");
-    console.log(descString);
-    
-    let toCreate = {
-      title: titleString,
-      descr: descString,
-    }
-    
-    toCreate = JSON.stringify(toCreate);
-    let fileName = "./uploads/" + output.name + ".svg";
-    sharedLibrary.writeWithFileName(toCreate, fileName);
-
-  })
-  
-  
-  res.redirect('/');
-
-});
 
 //Respond to POST requests that upload files to uploads/ directory
 app.post('/upload', function(req, res) {
@@ -111,6 +67,8 @@ app.post('/upload', function(req, res) {
     res.redirect('/');
   });
 });
+
+
 
 
 //Respond to GET requests for files in the uploads/ directory
@@ -156,6 +114,86 @@ let sharedLibrary = ffi.Library('parser/libsvgparse', {
     'fileNameToPathAttr' : [ 'string', [ 'string' ] ],
     'fileNameToGroupAttr' : [ 'string', [ 'string' ] ],
     'writeWithFileName' : [ 'string', [ 'string', 'string' ] ],
+    'addARectToSVG' : [ 'string', [ 'string', 'string' ] ],
+});
+
+
+app.post('/rectAdd', function(req, res) {
+  var output = {};
+  
+  req.on('data', function(data) {
+    data = data.toString();
+    data = data.split('&');
+    for (var i = 0; i < data.length; i++) {
+        var tokenizedData = data[i].split("=");
+        output[tokenizedData[0]] = tokenizedData[1];
+    }
+    
+    console.log(output.fname);
+    
+    let toCreate = {
+      x: output.x,
+      y: output.y,
+      w: output.w,
+      h: output.h,
+      units: output.units,
+    }
+    
+    toCreate = JSON.stringify(toCreate);
+    
+    console.log(toCreate);
+    
+    let fileName = "./uploads/" + output.fname;
+    
+    sharedLibrary.addARectToSVG(toCreate, fileName);
+
+  })
+  
+  
+  res.redirect('/');
+
+});
+
+
+app.post('/text', function(req, res) {
+  var output = {};
+  
+  req.on('data', function(data) {
+    data = data.toString();
+    data = data.split('&');
+    for (var i = 0; i < data.length; i++) {
+        var tokenizedData = data[i].split("=");
+        output[tokenizedData[0]] = tokenizedData[1];
+    }
+    
+    let titleString = "";
+    let tokenizedTitle = output.title.split("+");
+    tokenizedTitle.forEach(element => {
+      titleString = titleString + element + " ";
+    });
+
+    let descString = "";
+    let tokenizedDesc = output.description.split("+");
+    tokenizedDesc.forEach(element => {
+      descString = descString + element + " ";
+    });
+    
+
+    
+    let toCreate = {
+      title: titleString,
+      descr: descString,
+    }
+    
+    toCreate = JSON.stringify(toCreate);
+    let fileName = "./uploads/" + output.name + ".svg";
+    sharedLibrary.writeWithFileName(toCreate, fileName);
+
+  })
+  
+  
+  res.redirect('/');
+
 });
 
 
@@ -191,7 +229,6 @@ app.get('/getSVGfiles', function(req, res){
     pathAttributes = JSON.parse(pathAttributes);
     groupAttributes = JSON.parse(groupAttributes);
     
-    console.log(rectAttributes);
     
 
     let fullJSON = {
@@ -212,8 +249,8 @@ app.get('/getSVGfiles', function(req, res){
   
   });
   
-  console.log("The data being sent is : ");
-  console.log(jsonArr);
+  // console.log("The data being sent is : ");
+  // console.log(jsonArr);
   res.send(jsonArr);
   
 });
@@ -232,7 +269,7 @@ app.get('/uploadedFiles', function(req, res){
     
     let desc = sharedLibrary.getSVGFileDescription(filePath);
     
-    console.log(desc);
+    //console.log(desc);
     
 
     svgJSON = JSON.parse(svgJSON);
@@ -250,8 +287,8 @@ app.get('/uploadedFiles', function(req, res){
   
   });
   
-  console.log("The data being sent is : ");
-  console.log(jsonArr);
+  // console.log("The data being sent is : ");
+  // console.log(jsonArr);
 
   res.send(jsonArr);
 });

@@ -210,9 +210,46 @@ $(document).ready(function() {
         closeForm();
         window.location.reload();
     }
+    function openForm2() {
+        document.getElementById("myForm2").style.display = "block";
+    }
     
-    openBtn.addEventListener("click", openForm);
+    let openBtn2 = document.getElementById("open-button-2");
+    openBtn2.addEventListener("click", openForm2);
+    
+    let submitBtn2 = document.getElementById("submit-btn-2");
+    submitBtn2.addEventListener("click", handleSubmit2);
 
+    function handleSubmit2() {
+        console.log("Submitted");
+        let xInput = document.getElementById("xInput");
+        let yInput = document.getElementById("yInput");
+        let hInput = document.getElementById("hInput");
+        let wInput = document.getElementById("wInput");
+        let uInput = document.getElementById("uInput");
+        $.ajax({
+            type: 'post',
+            dataType: 'application/json',
+            url: '/rectAdd',
+            data: { 
+                x: String(xInput.value),
+                y: String(yInput.value),
+                w: String(wInput.value),
+                h: String(hInput.value),
+                units: String(uInput.value),
+                fname: String(global1),
+            },
+            success: function (data) {
+                console.log(data);
+            },
+            fail: function(error) {
+                console.log("Error with uploading file names. ");
+                console.log(error);
+            }
+        });
+        closeForm();
+        window.location.reload();
+    }
 
     // Event listener form example , we can use this instead explicitly listening for events
     // No redirects if possible
@@ -355,6 +392,7 @@ function listenDropDown(data) {
         for (let i = 0; i < data.length; i++) {
             if( data[i].fileName == anakinSkywalker) {
                 console.log("The chosen one is " + data[i].fileName); 
+                global1 = anakinSkywalker;
                 populateSVGtable(data[i]);
                 document.getElementById("main-attribute-dropdown").addEventListener("click",function(e) {
                     if(e.target && e.target.nodeName == "A") {

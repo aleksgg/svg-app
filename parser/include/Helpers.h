@@ -101,6 +101,8 @@ char * fileNameToPathAttr(char * fileName);
 
 char * writeWithFileName(char * json, char * name);
 
+char * addARectToSVG(char * json, char * fileName);
+
 
 
 /* 

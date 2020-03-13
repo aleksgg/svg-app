@@ -4,7 +4,7 @@
     <title>SVG Parser</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="CHANGE ME">
+    <meta name="description" content="2750 A3">
     <meta name="keywords" content="CHANGE ME">
     <meta name="author" content="Dogu Gerger">
     <!-- Load jquery, bootstrap -->
@@ -103,6 +103,31 @@
                     <td>No file selected</td>
                 </tbody>
             </table>
+            <div>
+            <button class="open-button" id="open-button-2">Add Rectangle</button>
+            <div class="form-popup" id="myForm2">
+                <form action="" class="form-container" id='myForm2'>
+                    
+                    <label for="xInput"><b>Value for x:</b></label>
+                    <input type="text" id="xInput" placeholder="Enter x Coordinate" name="xInput" >
+        
+                    <label for="yInput"><b>Value for y:</b></label>
+                    <input type="text" id="yInput" placeholder="Enter y Coordinate" name="yInput" >
+                
+                    <label for="hInput"><b>Value for height:</b></label>
+                    <input type="text" id="hInput" placeholder="Enter the height" name="hInput">
+                    
+                    <label for="wInput"><b>Value for width:</b></label>
+                    <input type="text" id="wInput" placeholder="Enter the width" name="wInput">
+
+                    <label for="uInput"><b>Units:</b></label>
+                    <input type="text" id="uInput" placeholder="Enter units:" name="uInput">
+
+                    <input value="Add" id="submit-btn-2" class="btn"></input>
+                    <button id="cls-btn-2" class="btn cancel">Close</button>
+                </form>
+            </div>
+            </div>    
         </table>
             <div class="dropdown">
               <button class="btn btn-primary dropdown-toggle" id="menu1" type="button" data-toggle="dropdown" data-flip="false">Show Attributes

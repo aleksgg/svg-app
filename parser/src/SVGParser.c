@@ -11,6 +11,20 @@
 #include <ctype.h>
 #include "assert.h"
 
+char * addARectToSVG(char * json, char * fileName) {
+    SVGimage * img = createValidSVGimage(fileName, "parser/validation/svg.xsd");
+
+    Rectangle * rect = JSONtoRect(json);
+
+    addComponent(img, RECT, (void*)rect);
+
+    writeSVGimage(img, fileName);
+    
+    deleteSVGimage(img);
+
+    return NULL;
+}
+
 char * writeWithFileName(char * json, char * name) {
     SVGimage * img = JSONtoSVG(json);
     
